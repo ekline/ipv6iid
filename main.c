@@ -51,6 +51,7 @@ int main(int argc, const char* argv[]) {
     struct in6_addr ipv6;
     memset(&ipv6, 0, sizeof(ipv6));
 
+    // [1] Try to parse the argument as a MAC address.
     struct ether_addr *parsed_mac48 = ether_aton(argv[1]);
     if (parsed_mac48 != NULL) {
         for (int i = 0; i < 3; i++) {
@@ -68,6 +69,7 @@ int main(int argc, const char* argv[]) {
         return 0;
     }
 
+    // [2] Try to parse the argument as a modified EUI64 IPv6 address.
     if (inet_pton(AF_INET6, argv[1], &ipv6) == 1) {
         if (ipv6.s6_addr[11] != 0xff || ipv6.s6_addr[12] != 0xfe) {
             fprintf(stderr, "%s does not contain a modified EUI64 IPv6 IID\n",
@@ -88,6 +90,7 @@ int main(int argc, const char* argv[]) {
         return 0;
     }
 
+    // [3] Failed to guess/parse argument.
     usage();
     return __LINE__;
 }

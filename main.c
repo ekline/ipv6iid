@@ -26,7 +26,11 @@ SOFTWARE.
 
 #include <arpa/inet.h>
 #include <assert.h>
-#include <netinet/ether.h>
+#ifdef __APPLE__
+#  include <net/ethernet.h>
+#else
+#  include <netinet/ether.h>
+#endif
 #include <netinet/in.h>
 #include <stdio.h>
 #include <string.h>

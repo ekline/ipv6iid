@@ -34,7 +34,7 @@ check test: test_mac_to_modified_eui64 \
 
 .PHONY: test_mac_to_modified_eui64
 test_mac_to_modified_eui64: ipv6iid
-	if [ "`./ipv6iid ce:22:4a:08:51:a0`" != "::cc22:4aff:fe08:51a0" ]; \
+	@if [ "`./ipv6iid ce:22:4a:08:51:a0`" != "::cc22:4aff:fe08:51a0" ]; \
 	then \
 	    echo "FAIL: $(@)" 1>&2; \
 	else \
@@ -43,7 +43,7 @@ test_mac_to_modified_eui64: ipv6iid
 
 .PHONY: test_modified_eui64_to_mac_1
 test_modified_eui64_to_mac_1: ipv6iid
-	if [ "`./ipv6iid ::cc22:4aff:fe08:51a0`" != "ce:22:4a:08:51:a0" -a \
+	@if [ "`./ipv6iid ::cc22:4aff:fe08:51a0`" != "ce:22:4a:08:51:a0" -a \
 	     "`./ipv6iid ::cc22:4aff:fe08:51a0`" != "ce:22:4a:8:51:a0" ]; \
 	then \
 	    echo "FAIL: $(@)" 1>&2; \
@@ -53,7 +53,7 @@ test_modified_eui64_to_mac_1: ipv6iid
 
 .PHONY: test_modified_eui64_to_mac_2
 test_modified_eui64_to_mac_2: ipv6iid
-	if [ "`./ipv6iid fe80::cc22:4aff:fe08:51a0`" != "ce:22:4a:08:51:a0" -a \
+	@if [ "`./ipv6iid fe80::cc22:4aff:fe08:51a0`" != "ce:22:4a:08:51:a0" -a \
 	     "`./ipv6iid fe80::cc22:4aff:fe08:51a0`" != "ce:22:4a:8:51:a0" ]; \
 	then \
 	    echo "FAIL: $(@)" 1>&2; \
@@ -62,5 +62,8 @@ test_modified_eui64_to_mac_2: ipv6iid
 	fi
 
 ipv6iid: main.o
-	$(CC) $(CFLAGS) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^
 
+.PHONY: clean
+clean:
+	@rm -f *.o ipv6iid

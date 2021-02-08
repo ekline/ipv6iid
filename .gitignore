@@ -30,4 +30,5 @@
 *.exe
 *.out
 *.app
-ipv6iid
+mac2iid
+iid2mac
